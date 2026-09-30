@@ -6,6 +6,7 @@
   <meta name="description" content="Contact Raynard Joseph Taneka.">
   <title>Contact | Raynard Joseph Taneka</title>
   <link rel="stylesheet" href="../style.css">
+  <script src="../contact.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -23,9 +24,8 @@
 
   <main id="main-content">
     <header class="page-intro">
-      <p class="eyebrow">Get in touch</p>
       <h1>Contact</h1>
-      <p>Send me a message about data, technology, collaboration, or a project idea.</p>
+      <p>Fill out the form to open a Gmail draft, or email me directly.</p>
     </header>
 
     <section class="contact-layout" aria-label="Contact form and details">
@@ -45,16 +45,16 @@
           <textarea name="body" rows="7" required></textarea>
         </label>
 
-        <button type="submit">Open email draft</button>
+        <button type="submit">Compose in Gmail</button>
+        <p id="form-status" class="form-status" aria-live="polite"></p>
       </form>
 
       <aside class="contact-note">
-        <p class="eyebrow">Email directly</p>
-        <h2>Prefer your email app?</h2>
-        <p>You can also contact me directly at:</p>
+        <h2>Email me directly</h2>
+        <p>If you don't use Gmail, use this address in any email app:</p>
         <a href="mailto:rtaneka@ucsd.edu">rtaneka@ucsd.edu</a>
         <p class="small-text">
-          Submitting this form opens your device's default email application with the message filled in.
+          The form only prepares a draft. It does not send the message automatically.
         </p>
       </aside>
     </section>
