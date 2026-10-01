@@ -203,6 +203,57 @@ button:hover {
   font-size: 0.9rem;
 }
 
+.startup-feature {
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.75fr) minmax(0, 1.25fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4rem);
+}
+
+.startup-feature-copy h2 {
+  margin-bottom: 0.8rem;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+}
+
+.startup-feature-copy > p:not(.eyebrow) {
+  color: var(--muted);
+}
+
+.startup-preview {
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  color: var(--text);
+  background: var(--light);
+  text-decoration: none;
+}
+
+.startup-preview:hover {
+  border-color: var(--blue);
+  color: var(--blue-dark);
+}
+
+.startup-preview:focus-visible {
+  outline: 3px solid rgb(198 146 20 / 38%);
+  outline-offset: 3px;
+}
+
+.startup-preview img {
+  width: 100%;
+  aspect-ratio: 3024 / 1584;
+  object-fit: cover;
+  object-position: top;
+}
+
+.startup-preview span {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0.9rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
 .section-block {
   padding-block: 3.5rem;
   border-top: 1px solid var(--border);
@@ -452,6 +503,7 @@ footer p {
   }
 
   .hero,
+  .startup-feature,
   .contact-layout,
   .project-card {
     grid-template-columns: 1fr;
