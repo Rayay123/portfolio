@@ -221,6 +221,9 @@ button:hover {
 
 .startup-preview {
   display: block;
+  width: min(100%, 30rem);
+  min-width: 0;
+  justify-self: end;
   overflow: hidden;
   border: 1px solid var(--border);
   color: var(--text);
@@ -240,7 +243,9 @@ button:hover {
 
 .startup-preview img {
   width: 100%;
-  aspect-ratio: 3024 / 1584;
+  height: auto;
+  max-height: 16rem;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   object-position: top;
 }
@@ -515,6 +520,10 @@ footer p {
 
   .portrait-card {
     width: min(100%, 20rem);
+  }
+
+  .startup-preview {
+    justify-self: start;
   }
 
   .two-column,
