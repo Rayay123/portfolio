@@ -1,27 +1,23 @@
-const form = document.querySelector("form");
-const statusMessage = document.querySelector("#form-status");
+const form=document.querySelector("form");
+const status=document.querySelector("#form-status");
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit",event=>{
   event.preventDefault();
-
-  const formData = new FormData(form);
-  const sender = formData.get("email").trim();
-  const subject = formData.get("subject").trim();
-  const message = formData.get("body").trim();
-  const body = `From: ${sender}\n\n${message}`;
-
-  const gmailURL = new URL("https://mail.google.com/mail/");
-  gmailURL.searchParams.set("view", "cm");
-  gmailURL.searchParams.set("fs", "1");
-  gmailURL.searchParams.set("to", "rtaneka@ucsd.edu");
-  gmailURL.searchParams.set("su", subject);
-  gmailURL.searchParams.set("body", body);
-
-  const composeLink = document.createElement("a");
-  composeLink.href = gmailURL;
-  composeLink.target = "_blank";
-  composeLink.rel = "noopener";
-  composeLink.click();
-
-  statusMessage.textContent = "A Gmail draft should now be open in a new tab.";
+  const data=new FormData(form);
+  const email=data.get("email").trim();
+  const subject=data.get("subject").trim();
+  const message=data.get("body").trim();
+  const body=`From: ${email}\n\n${message}`;
+  const gmail=new URL("https://mail.google.com/mail/");
+  gmail.searchParams.set("view","cm");
+  gmail.searchParams.set("fs","1");
+  gmail.searchParams.set("to","rtaneka@ucsd.edu");
+  gmail.searchParams.set("su",subject);
+  gmail.searchParams.set("body",body);
+  const link=document.createElement("a");
+  link.href=gmail;
+  link.target="_blank";
+  link.rel="noopener";
+  link.click();
+  status.textContent="A Gmail draft should now be open in a new tab.";
 });
