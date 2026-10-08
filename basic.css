@@ -1,9 +1,11 @@
 :root {
+  --color-accent: #185a8d;
   --text: #222;
   --muted: #555;
-  --border: #ccc;
-  --blue: #185a8d;
-  --light: #f3f3f3;
+  --border: #c8d2da;
+  --blue: var(--color-accent);
+  --light: #f3f7fa;
+  accent-color: var(--color-accent);
 }
 
 * {
@@ -11,7 +13,10 @@
 }
 
 body {
-  margin: 0;
+  max-width: 100ch;
+  margin-block: 0;
+  margin-inline: auto;
+  padding-inline: 1rem;
   color: var(--text);
   background: white;
   font-family: Arial, Helvetica, sans-serif;
@@ -34,6 +39,13 @@ img {
 
 h1,
 h2,
+h3 {
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+h1,
+h2,
 h3,
 p {
   margin-top: 0;
@@ -41,7 +53,7 @@ p {
 
 h1 {
   margin-bottom: 0.75rem;
-  font-size: 2.35rem;
+  font-size: 2.75rem;
 }
 
 h2 {
@@ -69,7 +81,8 @@ h3 {
 .site-header,
 main,
 footer {
-  width: min(58rem, calc(100% - 2rem));
+  width: 100%;
+  max-width: 58rem;
   margin-right: auto;
   margin-left: auto;
 }
@@ -91,19 +104,30 @@ footer {
 
 nav {
   display: flex;
+  flex: 1;
   flex-wrap: wrap;
-  gap: 1rem;
+  max-width: 32rem;
 }
 
 nav a {
+  flex: 1;
+  padding: 0.5rem;
+  border-bottom: 0.25rem solid transparent;
   color: var(--text);
+  text-align: center;
   text-decoration: none;
 }
 
-nav a:hover,
-nav a[aria-current="page"] {
+nav a.current {
+  padding-bottom: 0.25rem;
+  border-bottom-color: var(--border);
+}
+
+nav a:hover {
+  padding-bottom: 0.25rem;
+  border-bottom-color: var(--color-accent);
   color: var(--blue);
-  text-decoration: underline;
+  background: var(--light);
 }
 
 .hero {
@@ -276,13 +300,16 @@ button:hover {
   margin-bottom: 0.4rem;
 }
 
-.project-list {
+.projects {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 0.7fr;
   padding-bottom: 2rem;
 }
 
 .project-card {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 0.7fr;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
   gap: 1.5rem;
   padding: 1.5rem 0;
   border-bottom: 1px solid var(--border);
@@ -324,12 +351,14 @@ button:hover {
 
 form {
   display: grid;
+  grid-template-columns: auto 1fr;
   gap: 1rem;
 }
 
-label {
+form label {
   display: grid;
-  gap: 0.25rem;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
   font-weight: bold;
 }
 
@@ -354,10 +383,12 @@ textarea {
 }
 
 button {
+  grid-column: 1 / -1;
   justify-self: start;
 }
 
 .form-status {
+  grid-column: 1 / -1;
   min-height: 1.5rem;
   margin: 0;
   color: var(--muted);
@@ -458,13 +489,17 @@ footer p {
   }
 
   nav {
-    gap: 0.6rem 0.9rem;
+    max-width: none;
+  }
+
+  nav a {
+    flex-basis: 30%;
   }
 
   .hero,
   .startup-feature,
   .contact-layout,
-  .project-card,
+  .projects,
   .two-column,
   .card-grid,
   .skills-grid {
@@ -480,7 +515,16 @@ footer p {
   }
 
   .project-card {
+    grid-template-columns: 1fr;
     gap: 0.75rem;
+  }
+
+  form {
+    grid-template-columns: 1fr;
+  }
+
+  form label {
+    gap: 0.25rem;
   }
 
   .resume-entry header > p {
