@@ -1,10 +1,11 @@
 :root {
-  --color-accent: #185a8d;
-  --text: #222;
-  --muted: #555;
-  --border: #c8d2da;
+  color-scheme: light dark;
+  --color-accent: color-mix(in oklch, #2082c9 75%, canvastext 25%);
+  --text: canvastext;
+  --muted: color-mix(in oklch, canvastext 70%, canvas 30%);
+  --border: color-mix(in oklch, canvastext 24%, canvas 76%);
   --blue: var(--color-accent);
-  --light: #f3f7fa;
+  --light: color-mix(in oklch, var(--color-accent), canvas 92%);
   accent-color: var(--color-accent);
 }
 
@@ -16,9 +17,9 @@ body {
   max-width: 100ch;
   margin-block: 0;
   margin-inline: auto;
-  padding-inline: 1rem;
+  padding: 2.25rem 1rem 0;
   color: var(--text);
-  background: white;
+  background: canvas;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
   line-height: 1.5;
@@ -94,6 +95,19 @@ footer {
   gap: 1.5rem;
   padding: 1rem 0;
   border-bottom: 1px solid var(--border);
+}
+
+.color-scheme {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.color-scheme select {
+  margin-left: 0.25rem;
+  font: inherit;
 }
 
 .site-name {
@@ -175,19 +189,19 @@ button {
 
 .button.primary,
 button {
-  color: white;
+  color: canvas;
   background: var(--blue);
 }
 
 .button.secondary {
   color: var(--blue);
-  background: white;
+  background: canvas;
 }
 
 .button:hover,
 button:hover {
-  color: white;
-  background: #0d3f66;
+  color: canvas;
+  background: color-mix(in oklch, var(--color-accent), canvastext 18%);
 }
 
 .portrait-card {
@@ -241,7 +255,7 @@ button:hover {
   overflow: hidden;
   border: 1px solid var(--border);
   color: var(--text);
-  background: white;
+  background: canvas;
   text-decoration: none;
 }
 
@@ -369,7 +383,7 @@ textarea {
   border: 1px solid #888;
   border-radius: 0;
   color: var(--text);
-  background: white;
+  background: canvas;
   font: inherit;
 }
 
