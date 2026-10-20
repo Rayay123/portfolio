@@ -1,0 +1,169 @@
+.report-page {
+  max-width: 58rem;
+}
+
+.report-intro {
+  padding: 2.5rem 0 2rem;
+}
+
+.report-intro > p:last-child {
+  max-width: 44rem;
+  color: var(--muted);
+}
+
+.byline {
+  color: var(--muted);
+}
+
+.proposition {
+  margin: 1.75rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 5px solid var(--blue);
+  background: var(--light);
+}
+
+.proposition p {
+  margin-bottom: 0.25rem;
+  color: var(--blue);
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.proposition h2 {
+  margin-bottom: 0;
+  font-size: 1.55rem;
+}
+
+.argument,
+.report-section {
+  padding: 2.25rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.side-label {
+  margin-bottom: 0.4rem;
+  color: var(--blue);
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.argument > h2,
+.report-section > h2 {
+  margin-bottom: 1rem;
+}
+
+.chart {
+  margin: 0 0 2rem;
+}
+
+.chart img {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: white;
+}
+
+.chart figcaption {
+  padding-top: 0.65rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.decision-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: decisions;
+}
+
+.decision-list li {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  counter-increment: decisions;
+}
+
+.decision-list li > p:first-child::before {
+  content: counter(decisions) ". ";
+}
+
+.decision-list p {
+  margin-bottom: 0.6rem;
+}
+
+.decision-list p:last-child {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.score {
+  display: inline-block;
+  margin-left: 0.25rem;
+  padding: 0.05rem 0.35rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.score.earnest {
+  color: #22633c;
+  background: #edf7f0;
+}
+
+.score.deceptive {
+  color: #8a2830;
+  background: #fbeff0;
+}
+
+.score.neutral {
+  color: var(--muted);
+  background: canvas;
+}
+
+.report-section p {
+  max-width: 48rem;
+}
+
+.source-note {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.source-note h2 {
+  color: var(--text);
+  font-size: 1.2rem;
+}
+
+@media (max-width: 44rem) {
+  .report-intro {
+    padding-top: 2rem;
+  }
+
+  .decision-list {
+    grid-template-columns: 1fr;
+  }
+
+  .chart {
+    margin-right: -0.5rem;
+    margin-left: -0.5rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .score.earnest {
+    color: #b8e6c7;
+    background: #173c24;
+  }
+
+  .score.deceptive {
+    color: #f2bdc1;
+    background: #481d21;
+  }
+}
