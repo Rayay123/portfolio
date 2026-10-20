@@ -2,6 +2,8 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import pandas as pd
+from matplotlib.colors import Normalize
+from matplotlib.patches import Patch
 
 
 data_path=Path(__file__).parent / "data" / "guttmacher_by_state.xlsx"
@@ -36,12 +38,15 @@ plt.rcParams.update({
 
 # Supporting view: focus on states where the number of clinics increased.
 fig,ax=plt.subplots(figsize=(10,7))
-bars=ax.barh(gains[state_col],gains[change_col],color="#4c956c")
+gain_norm=Normalize(vmin=gains[change_col].min(),vmax=gains[change_col].max())
+green_scale=plt.colormaps["Greens"]
+bar_colors=[green_scale(.38+.5*gain_norm(value)) for value in gains[change_col]]
+bars=ax.barh(gains[state_col],gains[change_col],color=bar_colors)
 
-ax.set_title("Clinic access expanded in 15 states",loc="left",fontsize=20,pad=28)
+ax.set_title("Where clinic access expanded",loc="left",fontsize=20,pad=28)
 ax.text(
     0,1.015,
-    f"States that gained clinics added {total_gained} locations from 2017 to 2020.",
+    f"15 states added a combined {total_gained} clinics from 2017 to 2020.",
     transform=ax.transAxes,color="#4d4d4d",fontsize=12
 )
 ax.set_xlabel("Change in number of abortion clinics")
@@ -52,6 +57,12 @@ ax.set_axisbelow(True)
 
 for bar,value in zip(bars,gains[change_col]):
     ax.text(value+.18,bar.get_y()+bar.get_height()/2,f"+{int(value)}",va="center",fontsize=10)
+
+shade_key=[
+    Patch(facecolor=green_scale(.38),label="Smaller increase"),
+    Patch(facecolor=green_scale(.88),label="Larger increase"),
+]
+ax.legend(handles=shade_key,title="Green shade",loc="lower right",frameon=False)
 
 fig.text(.125,.025,"Only states with a net increase are shown.",fontsize=9,color="#666666")
 fig.text(.99,.025,"Source: Guttmacher Institute Abortion Data by State",ha="right",fontsize=9,color="#666666")

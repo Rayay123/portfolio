@@ -14,7 +14,7 @@ Design choices:
 
 1. I filtered the data to states that gained clinics. This is selective because most of the country is left out (-1.5).
 2. I sorted the bars so the largest increases are easy to notice. This uses position and length clearly (+1.5).
-3. I used green because it suggests growth and improvement. This changes the mood without changing the values (0).
+3. I used darker green for larger gains. This emphasizes growth while bar length and labels still show the values (-0.5).
 4. I placed the total gain in the subtitle so the positive result is seen before the limitation (-0.5).
 
 ## Opposing visualization
