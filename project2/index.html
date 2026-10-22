@@ -37,7 +37,7 @@
       <figure class="chart">
         <img
           src="figures/supporting_access_improved.png"
-          alt="Horizontal bar chart showing the 15 states that gained abortion clinics from 2017 to 2020. California gained 12, Illinois and Colorado gained 5 each, and the other states gained between 1 and 3."
+          alt="United States tile map highlighting the 15 states that gained abortion clinics from 2017 to 2020. Darker green indicates a larger increase, with California gaining 12 clinics."
         >
         <figcaption>
           This version focuses on the states that gained clinics. Together, these states added 42
@@ -48,29 +48,28 @@
       <h3>Design decisions and rationale</h3>
       <ol class="decision-list">
         <li>
-          <p><strong>Show only states with an increase</strong> <span class="score deceptive">−1.5</span></p>
+          <p><strong>Color only states with an increase</strong> <span class="score deceptive">−1.5</span></p>
           <p>
-            I filtered out states that lost clinics or did not change. This makes the positive result
-            easier to see, but it is also the most deceptive choice because readers do not see most
-            of the country. I considered showing every state, but that would weaken the argument this
-            chart is trying to make.
+            I colored states that gained clinics and left losses or no-change states gray. This makes
+            the positive result easier to see, but it is also the most deceptive choice because the
+            gray tiles hide two different outcomes. A red-and-green map would show both sides more
+            honestly, but it would weaken the argument this chart is trying to make.
           </p>
         </li>
         <li>
-          <p><strong>Sort states by their increase</strong> <span class="score earnest">+1.5</span></p>
+          <p><strong>Use a state tile map</strong> <span class="score earnest">+1</span></p>
           <p>
-            I put the largest increase at the top so comparisons can be made using position and bar
-            length on a common scale. Alphabetical order was another option, but it made the main
-            pattern harder to notice.
+            The tile map shows where the gains happened and keeps every state in a familiar U.S.
+            layout. Equal tile sizes make small eastern states easy to see, but the map does not
+            represent state population or geographic area.
           </p>
         </li>
         <li>
           <p><strong>Use darker green for larger gains</strong> <span class="score deceptive">−0.5</span></p>
           <p>
             Green is commonly connected with growth, so it helps the increases feel positive. Darker
-            shades also draw attention to states with larger gains, while bar length and direct labels
-            keep the values readable without relying only on color. A single neutral color would be
-            less persuasive but more emotionally balanced.
+            shades draw attention to states with larger gains, while the labels and color scale show
+            what the shades mean. A single neutral color would be less persuasive but more balanced.
           </p>
         </li>
         <li>
@@ -158,8 +157,8 @@
     <section class="report-section">
       <h2>Final reflection</h2>
       <p>
-        The straightforward part was calculating the state changes and giving the bar chart and tile
-        map clear labels. The difficult part was deciding how much context each chart should include. I was
+        The straightforward part was calculating the state changes and giving both tile maps clear
+        labels. The difficult part was deciding how much context each chart should include. I was
         surprised that I could make the same data feel positive just by filtering to the 15 states with
         gains. Nothing in that chart is invented, but leaving out the losses changes the conclusion a
         reader is likely to remember.
@@ -185,9 +184,9 @@
       <h2>Data and method</h2>
       <p>
         Source: Guttmacher Institute Abortion Data by U.S. State, provided through DSC 106. I used the
-        field <em>Change in the no. of abortion clinics, 2017–2020</em>. The supporting chart filters
-        for positive values and sorts the states by change. The opposing chart uses the same state-level
-        values but colors only the states with negative changes.
+        field <em>Change in the no. of abortion clinics, 2017–2020</em>. The supporting chart colors
+        only states with positive values. The opposing chart uses the same state-level values but
+        colors only the states with negative changes.
       </p>
     </section>
   </main>

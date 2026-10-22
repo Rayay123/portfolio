@@ -2,7 +2,7 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import pandas as pd
-from matplotlib.colors import Normalize
+from matplotlib.colors import LinearSegmentedColormap,Normalize
 from matplotlib.patches import FancyBboxPatch,Patch
 
 
@@ -35,43 +35,6 @@ plt.rcParams.update({
     "axes.spines.right":False,
 })
 
-
-# Supporting view: focus on states where the number of clinics increased.
-fig,ax=plt.subplots(figsize=(10,7))
-gain_norm=Normalize(vmin=gains[change_col].min(),vmax=gains[change_col].max())
-green_scale=plt.colormaps["Greens"]
-bar_colors=[green_scale(.38+.5*gain_norm(value)) for value in gains[change_col]]
-bars=ax.barh(gains[state_col],gains[change_col],color=bar_colors)
-
-ax.set_title("Where clinic access expanded",loc="left",fontsize=20,pad=28)
-ax.text(
-    0,1.015,
-    f"15 states added a combined {total_gained} clinics from 2017 to 2020.",
-    transform=ax.transAxes,color="#4d4d4d",fontsize=12
-)
-ax.set_xlabel("Change in number of abortion clinics")
-ax.set_ylabel("")
-ax.set_xlim(0,13)
-ax.grid(axis="x",color="#dddddd",linewidth=.8)
-ax.set_axisbelow(True)
-
-for bar,value in zip(bars,gains[change_col]):
-    ax.text(value+.18,bar.get_y()+bar.get_height()/2,f"+{int(value)}",va="center",fontsize=10)
-
-shade_key=[
-    Patch(facecolor=green_scale(.38),label="Smaller increase"),
-    Patch(facecolor=green_scale(.88),label="Larger increase"),
-]
-ax.legend(handles=shade_key,title="Green shade",loc="lower right",frameon=False)
-
-fig.text(.125,.025,"Only states with a net increase are shown.",fontsize=9,color="#666666")
-fig.text(.99,.025,"Source: Guttmacher Institute Abortion Data by State",ha="right",fontsize=9,color="#666666")
-fig.subplots_adjust(left=.22,right=.96,top=.85,bottom=.12)
-fig.savefig(figure_dir / "supporting_access_improved.png",dpi=180,facecolor="white")
-plt.close(fig)
-
-
-# Opposing view: a tile map highlights the states where clinics were lost.
 state_abbr={
     "Alabama":"AL","Alaska":"AK","Arizona":"AZ","Arkansas":"AR","California":"CA",
     "Colorado":"CO","Connecticut":"CT","Delaware":"DE","District of Columbia":"DC",
@@ -104,6 +67,50 @@ tile_positions={
 
 state_values={state_abbr[row[state_col]]:int(row[change_col]) for _,row in clinic_change.iterrows()}
 
+
+# Supporting view: focus on states where the number of clinics increased.
+gain_norm=Normalize(vmin=gains[change_col].min(),vmax=gains[change_col].max())
+green_scale=LinearSegmentedColormap.from_list("clinic_gains",["#d7ebdf","#0e6b3c"])
+fig,ax=plt.subplots(figsize=(11,7.4))
+tile_size=.9
+
+for state,(col,row) in tile_positions.items():
+    value=state_values[state]
+    is_gain=value>0
+    color=green_scale(gain_norm(value)) if is_gain else "#e5e5e1"
+    tile=FancyBboxPatch(
+        (col,-row),tile_size,tile_size,
+        boxstyle="round,pad=0.02,rounding_size=0.08",
+        facecolor=color,edgecolor="white",linewidth=1.6
+    )
+    ax.add_patch(tile)
+    if is_gain:
+        text_color="white" if value>=5 else "#1f2b24"
+        ax.text(col+tile_size/2,-row+.58,state,ha="center",va="center",fontweight="bold",color=text_color,fontsize=10)
+        ax.text(col+tile_size/2,-row+.28,f"+{value}",ha="center",va="center",color=text_color,fontsize=9)
+    else:
+        ax.text(col+tile_size/2,-row+.45,state,ha="center",va="center",color="#a0a0a0",fontsize=10)
+
+color_key=plt.cm.ScalarMappable(norm=gain_norm,cmap=green_scale)
+color_key.set_array([])
+cbar=fig.colorbar(color_key,ax=ax,orientation="horizontal",fraction=.045,pad=.075,shrink=.5)
+cbar.set_label("Abortion clinics gained",fontsize=10)
+cbar.outline.set_visible(False)
+
+ax.set_xlim(-.15,11)
+ax.set_ylim(-7.25,1.05)
+ax.set_aspect("equal")
+ax.axis("off")
+
+fig.suptitle(f"Supports: 15 states gained abortion clinics, 2017–2020 (+{total_gained} total)",x=.08,y=.95,ha="left",fontsize=18,fontweight="bold")
+fig.text(.08,.025,"Only states with a net increase are colored.",fontsize=9,color="#666666")
+fig.text(.98,.025,"Source: Guttmacher Institute Abortion Data by State",ha="right",fontsize=9,color="#666666")
+fig.subplots_adjust(left=.07,right=.97,top=.87,bottom=.13)
+fig.savefig(figure_dir / "supporting_access_improved.png",dpi=180,facecolor="white")
+plt.close(fig)
+
+
+# Opposing view: a tile map highlights the states where clinics were lost.
 def loss_color(value):
     if value<=-6:
         return "#8f2119"

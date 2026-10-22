@@ -8,13 +8,13 @@ A proposition is one debatable statement. One visualization should make the stat
 
 ## Supporting visualization
 
-The supporting chart focuses on the 15 states where the number of abortion clinics increased. Together, those states gained 42 clinics. Showing only the states with increases makes the improvement look widespread, even though states with no change or a decrease are left out.
+The supporting chart uses a state tile map for the 15 states where the number of abortion clinics increased. Together, those states gained 42 clinics. Showing only the increases in green makes the improvement look widespread, even though loss and no-change states are gray.
 
 Design choices:
 
-1. I filtered the data to states that gained clinics. This is selective because most of the country is left out (-1.5).
-2. I sorted the bars so the largest increases are easy to notice. This uses position and length clearly (+1.5).
-3. I used darker green for larger gains. This emphasizes growth while bar length and labels still show the values (-0.5).
+1. I colored only the states that gained clinics and grouped loss and no-change states together in gray (-1.5).
+2. I used a state tile map so the location of each gain is visible, although equal tiles do not represent population or geographic area (+1).
+3. I used darker green for larger gains. This emphasizes growth while labels and the color scale still show the values (-0.5).
 4. I placed the total gain in the subtitle so the positive result is seen before the limitation (-0.5).
 
 ## Opposing visualization
