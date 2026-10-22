@@ -101,11 +101,11 @@
       <h3>Design decisions and rationale</h3>
       <ol class="decision-list">
         <li>
-          <p><strong>Combine all state gains and losses</strong> <span class="score earnest">+1.5</span></p>
+          <p><strong>Combine the state changes into two totals</strong> <span class="score earnest">+1</span></p>
           <p>
-            I grouped the state changes into clinics added, clinics lost, and the national net change.
-            This includes every state and makes the overall result easy to compare. A state-by-state
-            chart would provide more detail, but the national pattern would take longer to find.
+            I added together all gains and all losses, so every state is included and the national
+            result is quick to compare. The limitation is that this hides which states changed. I
+            considered a state-by-state chart, but the five-clinic national gap was harder to notice.
           </p>
         </li>
         <li>
@@ -117,11 +117,19 @@
           </p>
         </li>
         <li>
-          <p><strong>Use red for the losses</strong> <span class="score neutral">0</span></p>
+          <p><strong>Put losses first and use red</strong> <span class="score deceptive">−0.5</span></p>
           <p>
-            Red directs attention toward decline and supports the opposing argument, while green still
-            shows the gains. I used darker red for the five unmatched loss tiles so the net shortfall
-            stands out without hiding either side.
+            I placed losses on the left, where readers begin, and used red to make decline feel more
+            serious. Green still shows the gains, but a neutral color pair or gains-first order would
+            make the chart feel less negative.
+          </p>
+        </li>
+        <li>
+          <p><strong>Darken the five unmatched loss tiles</strong> <span class="score deceptive">−0.5</span></p>
+          <p>
+            The darker tiles and arrow make the net loss visible without requiring subtraction. The
+            value is accurate, but this gives the negative difference extra attention. I considered
+            using one red shade, but the five-clinic shortfall was easier to miss.
           </p>
         </li>
         <li>
@@ -149,8 +157,8 @@
     <section class="report-section">
       <h2>Final reflection</h2>
       <p>
-        The straightforward part was calculating the state changes and building bars on a common
-        scale. The difficult part was deciding how much context each chart should include. I was
+        The straightforward part was calculating the state changes and giving the bars and tiles clear
+        units. The difficult part was deciding how much context each chart should include. I was
         surprised that I could make the same data feel positive just by filtering to the 15 states with
         gains. Nothing in that chart is invented, but leaving out the losses changes the conclusion a
         reader is likely to remember.
