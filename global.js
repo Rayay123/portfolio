@@ -72,3 +72,62 @@ select.addEventListener("input",event=>{
   localStorage.colorScheme=colorScheme;
 });
 
+export async function fetchJSON(url){
+  try{
+    // This works for both my JSON file and the GitHub API.
+    let response=await fetch(url);
+
+    if(!response.ok){
+      throw new Error(`Could not load data: ${response.statusText}`);
+    }
+
+    return await response.json();
+  }catch(error){
+    console.error("Error fetching or parsing JSON data:",error);
+    return null;
+  }
+}
+
+function projectPath(path){
+  if(!path || path.startsWith("http")) return path;
+  return BASE_PATH+path.replace(/^\//,"");
+}
+
+export function renderProjects(projects,containerElement,headingLevel="h2"){
+  if(!containerElement) return;
+
+  // Clear the old cards before making the new ones.
+  containerElement.innerHTML="";
+
+  if(!Array.isArray(projects) || projects.length===0){
+    containerElement.innerHTML="<p>No projects to show right now.</p>";
+    return;
+  }
+
+  if(!/^h[1-6]$/.test(headingLevel)) headingLevel="h2";
+
+  for(let project of projects){
+    let article=document.createElement("article");
+    article.className="project-card";
+
+    let projectTitle=project.url
+      ? `<a href="${projectPath(project.url)}">${project.title}</a>`
+      : project.title;
+
+    article.innerHTML=`
+      <div>
+        <p class="project-year">${project.year}</p>
+        <${headingLevel}>${projectTitle}</${headingLevel}>
+      </div>
+      <img src="${projectPath(project.image)}" alt="${project.title}">
+      <p>${project.description}</p>
+    `;
+
+    containerElement.appendChild(article);
+  }
+}
+
+export async function fetchGithubData(username){
+  return fetchJSON(`https://api.github.com/users/${username}`);
+}
+

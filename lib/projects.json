@@ -1,0 +1,77 @@
+[
+  {
+    "title":"Persuasive and Deceptive Visualization",
+    "year":2026,
+    "image":"project2/figures/supporting_access_improved.png",
+    "description":"Two state tile maps use the same clinic dataset to support opposite arguments about access.",
+    "url":"project2/"
+  },
+  {
+    "title":"Expository Grocery Visualization",
+    "year":2026,
+    "image":"images/project-placeholder.svg",
+    "description":"A chart showing the share of ultra-processed products listed by three grocery stores."
+  },
+  {
+    "title":"Naleya Genomics Report System",
+    "year":2024,
+    "image":"images/project-placeholder.svg",
+    "description":"A workflow that reads blood-test PDFs, organizes the results, and prepares a web summary."
+  },
+  {
+    "title":"idiya.ai Client Solutions",
+    "year":2026,
+    "image":"images/idiya-site-preview.jpg",
+    "description":"Enterprise AI and software work involving operations, client projects, and partnerships.",
+    "url":"https://idiya.ai/"
+  },
+  {
+    "title":"PwC Internship Work",
+    "year":2024,
+    "image":"images/project-placeholder.svg",
+    "description":"Data, web, backend, cloud, and risk-assurance work completed during my internship."
+  },
+  {
+    "title":"Personal Portfolio",
+    "year":2026,
+    "image":"images/raynard-taneka-profile.png",
+    "description":"My multi-page DSC 106 portfolio built with HTML, CSS, and JavaScript.",
+    "url":""
+  },
+  {
+    "title":"Course Visualization Practice",
+    "year":2026,
+    "image":"images/project-placeholder.svg",
+    "description":"Placeholder for another visualization created later in DSC 106."
+  },
+  {
+    "title":"Interactive Data Page",
+    "year":2026,
+    "image":"images/project-placeholder.svg",
+    "description":"Placeholder for a future interactive class project using browser-based data."
+  },
+  {
+    "title":"SQL Data Cleaning Exercise",
+    "year":2025,
+    "image":"images/project-placeholder.svg",
+    "description":"Placeholder for a project that cleans and organizes data with SQL."
+  },
+  {
+    "title":"Tableau Dashboard Exercise",
+    "year":2025,
+    "image":"images/project-placeholder.svg",
+    "description":"Placeholder for a dashboard project using Tableau."
+  },
+  {
+    "title":"Website Prototype",
+    "year":2024,
+    "image":"images/project-placeholder.svg",
+    "description":"Placeholder for an earlier website design and development exercise."
+  },
+  {
+    "title":"Business Operations Tracker",
+    "year":2025,
+    "image":"images/project-placeholder.svg",
+    "description":"Placeholder for a small project about tracking business tasks and progress."
+  }
+]

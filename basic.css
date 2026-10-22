@@ -316,43 +316,61 @@ button:hover {
 
 .projects {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 0.7fr;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
   padding-bottom: 2rem;
 }
 
 .project-card {
   display: grid;
-  grid-template-columns: subgrid;
-  grid-column: 1 / -1;
-  gap: 1.5rem;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid var(--border);
+  grid-template-rows: auto auto 1fr;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
 }
 
-.project-card h2 {
+.project-card h2,
+.project-card h3 {
   margin-bottom: 0;
   font-size: 1.25rem;
 }
 
-.project-type {
+.project-year {
+  margin-bottom: 0.25rem;
   color: var(--muted);
   font-size: 0.8rem;
 }
 
-.tag-list {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  gap: 0.35rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.project-card img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid var(--border);
 }
 
-.tag-list li {
-  padding: 0.2rem 0.4rem;
-  border: 1px solid var(--border);
-  font-size: 0.8rem;
+.project-card > p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.github-stats dl {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  margin: 0;
+  text-align: center;
+}
+
+.github-stats dt {
+  grid-row: 1;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.github-stats dd {
+  grid-row: 2;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .contact-layout {
@@ -529,8 +547,17 @@ footer p {
   }
 
   .project-card {
-    grid-template-columns: 1fr;
     gap: 0.75rem;
+  }
+
+  .github-stats dl {
+    grid-template-columns: repeat(2,1fr);
+    gap: 1rem;
+  }
+
+  .github-stats dt,
+  .github-stats dd {
+    grid-row: auto;
   }
 
   form {
