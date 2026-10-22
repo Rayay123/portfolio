@@ -86,58 +86,59 @@
 
     <section class="argument argument-opposes" aria-labelledby="opposing-title">
       <p class="side-label">Opposing the proposition</p>
-      <h2 id="opposing-title">The gains did not offset the losses</h2>
+      <h2 id="opposing-title">Clinic losses reached 19 states</h2>
       <figure class="chart">
         <img
           src="figures/opposing_access_improved.png"
-          alt="Tile chart in which each square represents one clinic. There are 47 red loss tiles and 42 green gain tiles, with five darker red tiles showing the national shortfall from 2017 to 2020."
+          alt="United States tile map highlighting the 19 states that lost abortion clinics from 2017 to 2020. Darker red indicates a larger decrease, while states without a loss are gray."
         >
         <figcaption>
-          This version includes every state. The 42 clinics added did not replace the 47 clinics lost,
-          so the national total decreased by five.
+          This version focuses on the 19 states that lost clinics. Together, they lost 47 clinics.
+          States that gained clinics or had no change are shown in gray.
         </figcaption>
       </figure>
 
       <h3>Design decisions and rationale</h3>
       <ol class="decision-list">
         <li>
-          <p><strong>Combine the state changes into two totals</strong> <span class="score earnest">+1</span></p>
+          <p><strong>Use a state tile map</strong> <span class="score earnest">+1</span></p>
           <p>
-            I added together all gains and all losses, so every state is included and the national
-            result is quick to compare. The limitation is that this hides which states changed. I
-            considered a state-by-state chart, but the five-clinic national gap was harder to notice.
+            The tile map shows where clinic losses happened while keeping every state in a familiar
+            U.S. layout. The tiles are all equal in size, so this is useful for location but not for
+            comparing state population or geographic area. I considered a geographic map, but small
+            eastern states would have been harder to see.
           </p>
         </li>
         <li>
-          <p><strong>Use one equal tile for each clinic</strong> <span class="score earnest">+2</span></p>
+          <p><strong>Label every loss directly</strong> <span class="score earnest">+2</span></p>
           <p>
-            Each square represents one clinic, so the red and green groups use the same unit and can
-            be counted directly. I considered keeping the bars, but tiles make the five-clinic gap more
-            concrete without changing the scale.
+            Each red state includes its abbreviation and exact clinic change, so readers do not have
+            to estimate values from color alone. A bar chart would make the values easier to rank, but
+            it would not show the regional pattern as clearly.
           </p>
         </li>
         <li>
-          <p><strong>Put losses first and use red</strong> <span class="score deceptive">−0.5</span></p>
+          <p><strong>Use darker red for larger losses</strong> <span class="score neutral">0</span></p>
           <p>
-            I placed losses on the left, where readers begin, and used red to make decline feel more
-            serious. Green still shows the gains, but a neutral color pair or gains-first order would
-            make the chart feel less negative.
+            The darker shades make states with larger losses stand out, and the legend explains the
+            ranges. Red also makes the decline feel serious, so a neutral single-color scale would be
+            less persuasive.
           </p>
         </li>
         <li>
-          <p><strong>Darken the five unmatched loss tiles</strong> <span class="score deceptive">−0.5</span></p>
+          <p><strong>Show gains and no-change states in gray</strong> <span class="score deceptive">−1.5</span></p>
           <p>
-            The darker tiles and arrow make the net loss visible without requiring subtraction. The
-            value is accurate, but this gives the negative difference extra attention. I considered
-            using one red shade, but the five-clinic shortfall was easier to miss.
+            Gray keeps the reader's attention on clinic losses, but it combines states that gained
+            clinics with states that did not change. A diverging red-and-green map would give both
+            sides equal attention, but it would weaken the opposing argument.
           </p>
         </li>
         <li>
           <p><strong>State the conclusion in the title</strong> <span class="score deceptive">−0.5</span></p>
           <p>
-            The title tells readers that the country ended with fewer clinics instead of asking a
-            neutral question. It is supported by the data, but it frames the chart negatively before
-            the reader looks at the values.
+            The title emphasizes that losses occurred across 19 states instead of leading with the
+            gains in other states. The statement is accurate, but it frames the chart negatively
+            before the reader looks at the full pattern.
           </p>
         </li>
       </ol>
@@ -157,8 +158,8 @@
     <section class="report-section">
       <h2>Final reflection</h2>
       <p>
-        The straightforward part was calculating the state changes and giving the bars and tiles clear
-        units. The difficult part was deciding how much context each chart should include. I was
+        The straightforward part was calculating the state changes and giving the bar chart and tile
+        map clear labels. The difficult part was deciding how much context each chart should include. I was
         surprised that I could make the same data feel positive just by filtering to the 15 states with
         gains. Nothing in that chart is invented, but leaving out the losses changes the conclusion a
         reader is likely to remember.
@@ -173,8 +174,8 @@
       </p>
       <p>
         Neither chart proves whether practical access improved. Both rely on clinic count as a proxy,
-        and the opposing chart also hides differences between individual states by reducing them to a
-        national total. A stronger analysis would add population, distance, clinic capacity, and policy
+        and the opposing chart groups states with gains together with states that had no change. A
+        stronger analysis would add population, distance, clinic capacity, and policy
         information. This project showed me that a clear chart can still be incomplete, so the data
         transformation and its limits are part of the argument, not just technical details.
       </p>
@@ -185,8 +186,8 @@
       <p>
         Source: Guttmacher Institute Abortion Data by U.S. State, provided through DSC 106. I used the
         field <em>Change in the no. of abortion clinics, 2017–2020</em>. The supporting chart filters
-        for positive values and sorts the states by change. The opposing chart sums all positive and
-        negative values and reports their net change.
+        for positive values and sorts the states by change. The opposing chart uses the same state-level
+        values but colors only the states with negative changes.
       </p>
     </section>
   </main>

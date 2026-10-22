@@ -19,15 +19,15 @@ Design choices:
 
 ## Opposing visualization
 
-The opposing chart combines every state and compares the 42 clinics gained with the 47 clinics lost. After including states on both sides, the national total decreased by five clinics. Nineteen states lost clinics, 15 gained clinics, and 17 had no change.
+The opposing chart uses a state tile map to highlight the 19 states that lost 47 clinics. States with gains or no change are shown in gray, which keeps attention on the negative side of the proposition.
 
 Design choices:
 
-1. I combined the state changes into two totals, so every state is included but the state-level differences are hidden (+1).
-2. I used one equal tile for each clinic, so the 47 losses and 42 gains use the same unit (+2).
-3. I put losses first and used red, which makes the negative side feel more serious than a neutral or gains-first layout (-0.5).
-4. I darkened the five unmatched loss tiles so the net loss is obvious, but this gives the negative result extra attention (-0.5).
-5. The title states the negative conclusion directly. The claim is supported, but its framing is one-sided (-0.5).
+1. I used a state tile map, which shows where the losses happened but does not represent population or geographic size (+1).
+2. I labeled every loss directly so the values do not have to be estimated from color (+2).
+3. I used darker red for larger losses and included a legend, although red makes the decline feel serious (0).
+4. I grouped gain and no-change states together in gray, which leaves out the positive values and strongly favors the opposing side (-1.5).
+5. The title emphasizes that losses occurred across 19 states. It is accurate, but it frames the chart negatively (-0.5).
 
 ## Which side I lean toward
 

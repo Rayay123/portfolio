@@ -3,7 +3,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.colors import Normalize
-from matplotlib.patches import Patch,Rectangle
+from matplotlib.patches import FancyBboxPatch,Patch
 
 
 data_path=Path(__file__).parent / "data" / "guttmacher_by_state.xlsx"
@@ -71,47 +71,82 @@ fig.savefig(figure_dir / "supporting_access_improved.png",dpi=180,facecolor="whi
 plt.close(fig)
 
 
-# Opposing view: one tile represents one clinic added or lost.
-fig,ax=plt.subplots(figsize=(10,6.4))
-tile_size=.78
-loss_x=0
-gain_x=12
+# Opposing view: a tile map highlights the states where clinics were lost.
+state_abbr={
+    "Alabama":"AL","Alaska":"AK","Arizona":"AZ","Arkansas":"AR","California":"CA",
+    "Colorado":"CO","Connecticut":"CT","Delaware":"DE","District of Columbia":"DC",
+    "Florida":"FL","Georgia":"GA","Hawaii":"HI","Idaho":"ID","Illinois":"IL",
+    "Indiana":"IN","Iowa":"IA","Kansas":"KS","Kentucky":"KY","Louisiana":"LA",
+    "Maine":"ME","Maryland":"MD","Massachusetts":"MA","Michigan":"MI",
+    "Minnesota":"MN","Mississippi":"MS","Missouri":"MO","Montana":"MT",
+    "Nebraska":"NE","Nevada":"NV","New Hampshire":"NH","New Jersey":"NJ",
+    "New Mexico":"NM","New York":"NY","North Carolina":"NC","North Dakota":"ND",
+    "Ohio":"OH","Oklahoma":"OK","Oregon":"OR","Pennsylvania":"PA",
+    "Rhode Island":"RI","South Carolina":"SC","South Dakota":"SD","Tennessee":"TN",
+    "Texas":"TX","Utah":"UT","Vermont":"VT","Virginia":"VA","Washington":"WA",
+    "West Virginia":"WV","Wisconsin":"WI","Wyoming":"WY",
+}
 
-for i in range(total_lost):
-    col=i%10
-    row=i//10
-    color="#9d2f37" if i>=total_gained else "#c95d63"
-    ax.add_patch(Rectangle((loss_x+col,4-row),tile_size,tile_size,facecolor=color))
+tile_positions={
+    "AK":(0,0),"ME":(10,0),
+    "VT":(9,1),"NH":(10,1),
+    "WA":(0,2),"ID":(1,2),"MT":(2,2),"ND":(3,2),"MN":(4,2),"IL":(5,2),
+    "WI":(6,2),"MI":(7,2),"NY":(8,2),"RI":(9,2),"MA":(10,2),
+    "OR":(0,3),"NV":(1,3),"WY":(2,3),"SD":(3,3),"IA":(4,3),"IN":(5,3),
+    "OH":(6,3),"PA":(7,3),"NJ":(8,3),"CT":(9,3),
+    "CA":(0,4),"UT":(1,4),"CO":(2,4),"NE":(3,4),"MO":(4,4),"KY":(5,4),
+    "WV":(6,4),"VA":(7,4),"MD":(8,4),"DE":(9,4),
+    "AZ":(1,5),"NM":(2,5),"KS":(3,5),"AR":(4,5),"TN":(5,5),"NC":(6,5),
+    "SC":(7,5),"DC":(8,5),
+    "OK":(3,6),"LA":(4,6),"MS":(5,6),"AL":(6,6),"GA":(7,6),
+    "HI":(0,7),"TX":(3,7),"FL":(8,7),
+}
 
-for i in range(total_gained):
-    col=i%10
-    row=i//10
-    ax.add_patch(Rectangle((gain_x+col,4-row),tile_size,tile_size,facecolor="#8ab69b"))
+state_values={state_abbr[row[state_col]]:int(row[change_col]) for _,row in clinic_change.iterrows()}
 
-ax.text(4.4,5.25,"47 clinics lost",ha="center",fontsize=14,fontweight="bold",color="#9d2f37")
-ax.text(16.4,5.25,"42 clinics added",ha="center",fontsize=14,fontweight="bold",color="#3f7254")
-ax.annotate(
-    "5-clinic shortfall",
-    xy=(4.4,.38),xytext=(4.4,-.85),
-    ha="center",fontsize=11,fontweight="bold",color="#9d2f37",
-    arrowprops={"arrowstyle":"->","color":"#9d2f37","linewidth":1.2}
-)
+def loss_color(value):
+    if value<=-6:
+        return "#8f2119"
+    if value<=-3:
+        return "#bb3529"
+    return "#d85a4c"
 
-ax.set_xlim(-.4,21.8)
-ax.set_ylim(-1.25,6)
+fig,ax=plt.subplots(figsize=(11,7.4))
+tile_size=.9
+
+for state,(col,row) in tile_positions.items():
+    value=state_values[state]
+    is_loss=value<0
+    color=loss_color(value) if is_loss else "#e5e5e1"
+    tile=FancyBboxPatch(
+        (col,-row),tile_size,tile_size,
+        boxstyle="round,pad=0.02,rounding_size=0.08",
+        facecolor=color,edgecolor="white",linewidth=1.6
+    )
+    ax.add_patch(tile)
+    text_color="white" if is_loss else "#a0a0a0"
+    ax.text(col+tile_size/2,-row+.58,state,ha="center",va="center",fontweight="bold" if is_loss else "normal",color=text_color,fontsize=10)
+    if is_loss:
+        ax.text(col+tile_size/2,-row+.28,str(value),ha="center",va="center",color="white",fontsize=9)
+
+legend_items=[
+    Patch(facecolor="#d85a4c",label="Lost 1–2"),
+    Patch(facecolor="#bb3529",label="Lost 3–5"),
+    Patch(facecolor="#8f2119",label="Lost 6 or more"),
+    Patch(facecolor="#e5e5e1",label="No loss shown"),
+]
+ax.legend(handles=legend_items,ncol=4,loc="lower center",bbox_to_anchor=(.5,-.11),frameon=False,fontsize=9)
+
+ax.set_xlim(-.15,11)
+ax.set_ylim(-7.25,1.05)
 ax.set_aspect("equal")
 ax.axis("off")
 
-fig.suptitle("Clinic losses outweighed gains nationwide",x=.07,y=.95,ha="left",fontsize=20,fontweight="bold")
-fig.text(.07,.875,"From 2017 to 2020, 47 clinics were lost and 42 were added—a net change of -5.",fontsize=12,color="#4d4d4d")
-
-fig.text(
-    .125,.025,
-    f"{len(gains)} states gained clinics, {len(losses)} lost clinics, and {len(no_change)} had no change.",
-    fontsize=9,color="#666666"
-)
-fig.text(.99,.025,"Source: Guttmacher Institute Abortion Data by State",ha="right",fontsize=9,color="#666666")
-fig.subplots_adjust(left=.06,right=.98,top=.82,bottom=.15)
+fig.suptitle("Clinic losses were spread across 19 states",x=.08,y=.95,ha="left",fontsize=20,fontweight="bold")
+fig.text(.08,.89,"Together, these states lost 47 clinics from 2017 to 2020.",fontsize=12,color="#4d4d4d")
+fig.text(.08,.035,"Only states with a net loss are colored. States with gains or no change are gray.",fontsize=9,color="#666666")
+fig.text(.98,.035,"Source: Guttmacher Institute Abortion Data by State",ha="right",fontsize=9,color="#666666")
+fig.subplots_adjust(left=.07,right=.97,top=.84,bottom=.16)
 fig.savefig(figure_dir / "opposing_access_improved.png",dpi=180,facecolor="white")
 plt.close(fig)
 
