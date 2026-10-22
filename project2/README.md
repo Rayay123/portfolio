@@ -24,8 +24,8 @@ The opposing chart combines every state and compares the 42 clinics gained with 
 Design choices:
 
 1. I aggregated gains and losses so the national result is easy to compare. Every state is included (+1.5).
-2. I used red for losses and a darker red for the negative net change. This directs attention to decline but matches the data (0).
-3. I included a zero line and a shared scale so positive and negative changes are clear (+2).
+2. I used one equal tile for each clinic, so the 47 losses and 42 gains use the same unit (+2).
+3. I used red for losses, green for gains, and darker red for the five unmatched losses. This directs attention to decline but keeps both sides visible (0).
 4. The title states the negative conclusion directly. The claim is supported, but its framing is one-sided (-0.5).
 
 ## Which side I lean toward

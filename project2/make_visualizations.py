@@ -3,7 +3,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.colors import Normalize
-from matplotlib.patches import Patch
+from matplotlib.patches import Patch,Rectangle
 
 
 data_path=Path(__file__).parent / "data" / "guttmacher_by_state.xlsx"
@@ -71,35 +71,39 @@ fig.savefig(figure_dir / "supporting_access_improved.png",dpi=180,facecolor="whi
 plt.close(fig)
 
 
-# Opposing view: combine all states to show the nationwide result.
-labels=["Clinics added\nin gain states","Clinics lost\nin loss states","National\nnet change"]
-values=[total_gained,-total_lost,net_change]
-colors=["#8ab69b","#c95d63","#9d2f37"]
-
+# Opposing view: one tile represents one clinic added or lost.
 fig,ax=plt.subplots(figsize=(10,6.4))
-bars=ax.bar(labels,values,color=colors,width=.62)
+tile_size=.78
+loss_x=0
+gain_x=12
 
-ax.set_title("The United States ended with fewer clinics",loc="left",fontsize=20,pad=28)
-ax.text(
-    0,1.015,
-    f"The 42 added clinics did not fully offset 47 lost clinics, leaving a net change of {net_change}.",
-    transform=ax.transAxes,color="#4d4d4d",fontsize=12
+for i in range(total_lost):
+    col=i%10
+    row=i//10
+    color="#9d2f37" if i>=total_gained else "#c95d63"
+    ax.add_patch(Rectangle((loss_x+col,4-row),tile_size,tile_size,facecolor=color))
+
+for i in range(total_gained):
+    col=i%10
+    row=i//10
+    ax.add_patch(Rectangle((gain_x+col,4-row),tile_size,tile_size,facecolor="#8ab69b"))
+
+ax.text(4.4,5.25,"47 clinics lost",ha="center",fontsize=14,fontweight="bold",color="#9d2f37")
+ax.text(16.4,5.25,"42 clinics added",ha="center",fontsize=14,fontweight="bold",color="#3f7254")
+ax.annotate(
+    "5-clinic shortfall",
+    xy=(4.4,.38),xytext=(4.4,-.85),
+    ha="center",fontsize=11,fontweight="bold",color="#9d2f37",
+    arrowprops={"arrowstyle":"->","color":"#9d2f37","linewidth":1.2}
 )
-ax.set_ylabel("Change in number of abortion clinics")
-ax.axhline(0,color="#333333",linewidth=1)
-ax.grid(axis="y",color="#dddddd",linewidth=.8)
-ax.set_axisbelow(True)
-ax.set_ylim(-55,50)
 
-for bar,value in zip(bars,values):
-    if value>=0:
-        y=value+2
-        va="bottom"
-    else:
-        y=value-2
-        va="top"
-    label=f"+{value}" if value>0 else str(value)
-    ax.text(bar.get_x()+bar.get_width()/2,y,label,ha="center",va=va,fontweight="bold")
+ax.set_xlim(-.4,21.8)
+ax.set_ylim(-1.25,6)
+ax.set_aspect("equal")
+ax.axis("off")
+
+fig.suptitle("Clinic losses outweighed gains nationwide",x=.07,y=.95,ha="left",fontsize=20,fontweight="bold")
+fig.text(.07,.875,"From 2017 to 2020, 47 clinics were lost and 42 were added—a net change of -5.",fontsize=12,color="#4d4d4d")
 
 fig.text(
     .125,.025,
@@ -107,7 +111,7 @@ fig.text(
     fontsize=9,color="#666666"
 )
 fig.text(.99,.025,"Source: Guttmacher Institute Abortion Data by State",ha="right",fontsize=9,color="#666666")
-fig.subplots_adjust(left=.12,right=.96,top=.84,bottom=.17)
+fig.subplots_adjust(left=.06,right=.98,top=.82,bottom=.15)
 fig.savefig(figure_dir / "opposing_access_improved.png",dpi=180,facecolor="white")
 plt.close(fig)
 
