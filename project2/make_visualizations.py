@@ -3,7 +3,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.colors import LinearSegmentedColormap,Normalize
-from matplotlib.patches import FancyBboxPatch,Patch
+from matplotlib.patches import FancyBboxPatch
 
 
 data_path=Path(__file__).parent / "data" / "guttmacher_by_state.xlsx"
@@ -111,49 +111,43 @@ plt.close(fig)
 
 
 # Opposing view: a tile map highlights the states where clinics were lost.
-def loss_color(value):
-    if value<=-6:
-        return "#8f2119"
-    if value<=-3:
-        return "#bb3529"
-    return "#d85a4c"
-
+loss_norm=Normalize(vmin=abs(losses[change_col]).min(),vmax=abs(losses[change_col]).max())
+red_scale=LinearSegmentedColormap.from_list("clinic_losses",["#f3d4d0","#972118"])
 fig,ax=plt.subplots(figsize=(11,7.4))
 tile_size=.9
 
 for state,(col,row) in tile_positions.items():
     value=state_values[state]
     is_loss=value<0
-    color=loss_color(value) if is_loss else "#e5e5e1"
+    color=red_scale(loss_norm(abs(value))) if is_loss else "#e5e5e1"
     tile=FancyBboxPatch(
         (col,-row),tile_size,tile_size,
         boxstyle="round,pad=0.02,rounding_size=0.08",
         facecolor=color,edgecolor="white",linewidth=1.6
     )
     ax.add_patch(tile)
-    text_color="white" if is_loss else "#a0a0a0"
-    ax.text(col+tile_size/2,-row+.58,state,ha="center",va="center",fontweight="bold" if is_loss else "normal",color=text_color,fontsize=10)
     if is_loss:
-        ax.text(col+tile_size/2,-row+.28,str(value),ha="center",va="center",color="white",fontsize=9)
+        text_color="white" if abs(value)>=4 else "#30201f"
+        ax.text(col+tile_size/2,-row+.58,state,ha="center",va="center",fontweight="bold",color=text_color,fontsize=10)
+        ax.text(col+tile_size/2,-row+.28,str(value),ha="center",va="center",color=text_color,fontsize=9)
+    else:
+        ax.text(col+tile_size/2,-row+.45,state,ha="center",va="center",color="#a0a0a0",fontsize=10)
 
-legend_items=[
-    Patch(facecolor="#d85a4c",label="Lost 1–2"),
-    Patch(facecolor="#bb3529",label="Lost 3–5"),
-    Patch(facecolor="#8f2119",label="Lost 6 or more"),
-    Patch(facecolor="#e5e5e1",label="No loss shown"),
-]
-ax.legend(handles=legend_items,ncol=4,loc="lower center",bbox_to_anchor=(.5,-.11),frameon=False,fontsize=9)
+color_key=plt.cm.ScalarMappable(norm=loss_norm,cmap=red_scale)
+color_key.set_array([])
+cbar=fig.colorbar(color_key,ax=ax,orientation="horizontal",fraction=.045,pad=.075,shrink=.5)
+cbar.set_label("Abortion clinics lost",fontsize=10)
+cbar.outline.set_visible(False)
 
 ax.set_xlim(-.15,11)
 ax.set_ylim(-7.25,1.05)
 ax.set_aspect("equal")
 ax.axis("off")
 
-fig.suptitle("Clinic losses were spread across 19 states",x=.08,y=.95,ha="left",fontsize=20,fontweight="bold")
-fig.text(.08,.89,"Together, these states lost 47 clinics from 2017 to 2020.",fontsize=12,color="#4d4d4d")
-fig.text(.08,.035,"Only states with a net loss are colored. States with gains or no change are gray.",fontsize=9,color="#666666")
-fig.text(.98,.035,"Source: Guttmacher Institute Abortion Data by State",ha="right",fontsize=9,color="#666666")
-fig.subplots_adjust(left=.07,right=.97,top=.84,bottom=.16)
+fig.suptitle(f"Opposes: 19 states lost abortion clinics, 2017–2020 (−{total_lost} total)",x=.08,y=.95,ha="left",fontsize=18,fontweight="bold")
+fig.text(.08,.025,"Only states with a net loss are colored.",fontsize=9,color="#666666")
+fig.text(.98,.025,"Source: Guttmacher Institute Abortion Data by State",ha="right",fontsize=9,color="#666666")
+fig.subplots_adjust(left=.07,right=.97,top=.87,bottom=.13)
 fig.savefig(figure_dir / "opposing_access_improved.png",dpi=180,facecolor="white")
 plt.close(fig)
 

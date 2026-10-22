@@ -25,7 +25,7 @@ Design choices:
 
 1. I used a state tile map, which shows where the losses happened but does not represent population or geographic size (+1).
 2. I labeled every loss directly so the values do not have to be estimated from color (+2).
-3. I used darker red for larger losses and included a legend, although red makes the decline feel serious (0).
+3. I used darker red for larger losses and included a color scale, although red makes the decline feel serious (0).
 4. I grouped gain and no-change states together in gray, which leaves out the positive values and strongly favors the opposing side (-1.5).
 5. The title emphasizes that losses occurred across 19 states. It is accurate, but it frames the chart negatively (-0.5).
 
