@@ -321,6 +321,94 @@ button:hover {
   padding-bottom: 2rem;
 }
 
+.projects-chart {
+  padding: 1.5rem 0;
+}
+
+.projects-chart > div:first-child p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.chart-layout {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+#projects-pie-plot {
+  width: min(100%, 18rem);
+  overflow: visible;
+}
+
+#projects-pie-plot path {
+  cursor: pointer;
+  transition: opacity 200ms;
+}
+
+#projects-pie-plot:has(path:hover) path:not(:hover) {
+  opacity: 0.45;
+}
+
+#projects-pie-plot path:focus-visible,
+.legend-item:focus-visible {
+  outline: 3px solid var(--text);
+  outline-offset: 2px;
+}
+
+.legend {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+  gap: 0.75rem 1.25rem;
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  list-style: none;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+
+.swatch {
+  width: 1rem;
+  aspect-ratio: 1 / 1;
+  border-radius: 2px;
+  background: var(--color);
+}
+
+.legend-item em {
+  color: var(--muted);
+}
+
+#projects-pie-plot .selected {
+  fill: var(--text);
+  stroke: canvas;
+  stroke-width: 1.5;
+}
+
+.legend-item.selected {
+  font-weight: bold;
+  background: var(--light);
+}
+
+.project-search {
+  display: block;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.project-search span {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
 .project-card {
   display: grid;
   grid-template-rows: auto auto 1fr;
@@ -548,6 +636,17 @@ footer p {
 
   .project-card {
     gap: 0.75rem;
+  }
+
+  .chart-layout {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  #projects-pie-plot {
+    align-self: center;
+    width: min(100%, 15rem);
   }
 
   .github-stats dl {

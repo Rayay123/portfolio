@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Selected projects and professional work by Raynard Joseph Taneka.">
   <title>Projects | Raynard Joseph Taneka</title>
-  <link rel="stylesheet" href="../basic.css?v=20261022">
+  <link rel="stylesheet" href="../basic.css?v=20261029">
   <script type="module" src="../global.js"></script>
   <script type="module" src="projects.js"></script>
 </head>
@@ -23,7 +23,34 @@
       <p>Here are projects from school, work, and a few placeholders for work I will add later.</p>
     </header>
 
-    <section class="projects" aria-label="Project list"></section>
+    <section class="projects-chart" aria-labelledby="projects-chart-title">
+      <div>
+        <h2 id="projects-chart-title">Projects by year</h2>
+        <p>Click a slice or legend item to filter the projects.</p>
+      </div>
+
+      <div class="chart-layout">
+        <svg
+          id="projects-pie-plot"
+          viewBox="-50 -50 100 100"
+          role="group"
+          aria-label="Pie chart showing the number of projects from each year"
+        ></svg>
+        <ul class="legend" aria-label="Project years"></ul>
+      </div>
+    </section>
+
+    <label class="project-search">
+      <span>Search projects</span>
+      <input
+        class="searchBar"
+        type="search"
+        aria-label="Search projects"
+        placeholder="Search by title, year, or description"
+      >
+    </label>
+
+    <section class="projects" aria-label="Project list" aria-live="polite"></section>
   </main>
 
 </body>
