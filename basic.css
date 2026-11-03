@@ -410,7 +410,7 @@ button:hover {
 }
 
 .meta-section {
-  padding: 1.75rem 0;
+  padding: 1.5rem 0;
   border-bottom: 1px solid var(--border);
 }
 
@@ -476,12 +476,9 @@ dl.stats dd {
 
 #chart circle {
   fill: var(--blue);
-  fill-opacity: 0.7;
+  fill-opacity: 0.75;
   stroke: canvas;
   stroke-width: 1;
-  transition: 150ms;
-  transform-box: fill-box;
-  transform-origin: center;
 }
 
 #chart circle:hover,
@@ -490,7 +487,6 @@ dl.stats dd {
   outline: none;
   stroke: var(--text);
   stroke-width: 2;
-  transform: scale(1.2);
 }
 
 #chart circle.selected {
@@ -527,13 +523,10 @@ dl.info dt {
   width: min(15rem,calc(100vw - 1rem));
   padding: 0.75rem;
   border: 1px solid var(--border);
-  border-radius: 3px;
   color: var(--text);
   background: canvas;
-  box-shadow: 0 0.3rem 1rem color-mix(in oklch,canvastext 18%,transparent);
   font-size: 0.8rem;
   pointer-events: none;
-  transition: opacity 150ms,visibility 150ms;
 }
 
 .tooltip[hidden] {

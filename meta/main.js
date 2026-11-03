@@ -1,6 +1,7 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
 
 async function loadData(){
+  // convert csv text into numbers and dates
   return d3.csv("loc.csv",row=>({
     ...row,
     line:Number(row.line),
@@ -12,6 +13,7 @@ async function loadData(){
 }
 
 function processCommits(data){
+  // put all of the lines from the same commit together
   return d3.groups(data,d=>d.commit).map(([commit,lines])=>{
     let first=lines[0];
     let {author,date,time,timezone,datetime}=first;
@@ -56,12 +58,12 @@ function renderCommitInfo(data,commits){
   );
 
   let values=[
-    ["Total LOC",data.length],
-    ["Commits",commits.length],
-    ["Files",d3.group(data,d=>d.file).size],
+    ["Lines of code",data.length],
+    ["Number of commits",commits.length],
+    ["Number of files",d3.group(data,d=>d.file).size],
     ["Average file length",Math.round(d3.mean(fileLengths,d=>d[1]))+" lines"],
     ["Longest line",d3.max(data,d=>d.length)+" characters"],
-    ["Most active time",d3.greatest(workByPeriod,d=>d[1])?.[0] || "N/A"],
+    ["Most common time",d3.greatest(workByPeriod,d=>d[1])?.[0] || "N/A"],
   ];
 
   let list=stats.append("dl").attr("class","stats");
@@ -103,6 +105,7 @@ function updateTooltipPosition(event){
 }
 
 function renderScatterPlot(commits){
+  // chart size and margins
   let width=1000;
   let height=600;
   let margin={top:20,right:20,bottom:55,left:65};
@@ -158,6 +161,7 @@ function renderScatterPlot(commits){
         .tickFormat(d=>String(d%24).padStart(2,"0")+":00"),
     );
 
+  // large circles go first so the small ones are still visible
   let sortedCommits=d3.sort(commits,d=>-d.totalLines);
   let dots=svg.append("g").attr("class","dots");
 
@@ -218,7 +222,7 @@ function renderScatterPlot(commits){
     if(selected.length===0) return;
 
     let lines=selected.flatMap(d=>d.lines);
-    let breakdown=d3.rollup(lines,values=>values.length,d=>d.type);
+    let breakdown=d3.rollup(lines,group=>group.length,d=>d.type);
 
     for(let [language,count] of breakdown){
       let formatted=d3.format(".1~%")(count/lines.length);

@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A D3 analysis of the code and commits behind Raynard's portfolio.">
-  <title>Code Meta Analysis | Raynard Joseph Taneka</title>
-  <link rel="stylesheet" href="../basic.css?v=20261103">
+  <meta name="description" content="A page about the code and commits in my portfolio.">
+  <title>My Code Activity | Raynard Joseph Taneka</title>
+  <link rel="stylesheet" href="../basic.css?v=20261103b">
   <script type="module" src="../global.js"></script>
-  <script type="module" src="main.js"></script>
+  <script type="module" src="main.js?v=2"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -19,20 +19,20 @@
   <main id="main-content" class="meta-page">
     <header class="page-intro">
       <p class="eyebrow">Lab 6</p>
-      <h1>Code Meta Analysis</h1>
-      <p>This page looks at when I worked on this portfolio and how much code each commit changed.</p>
+      <h1>My Code Activity</h1>
+      <p>I used D3 to look at the code and commits from this portfolio.</p>
     </header>
 
     <section class="meta-section" aria-labelledby="summary-heading">
-      <h2 id="summary-heading">Summary</h2>
+      <h2 id="summary-heading">A few code stats</h2>
       <div id="stats">Loading code statistics...</div>
     </section>
 
     <section class="meta-section" aria-labelledby="commits-heading">
-      <h2 id="commits-heading">Commits by time of day</h2>
+      <h2 id="commits-heading">When I worked on my portfolio</h2>
       <p class="meta-note">
-        Each dot is a commit. Its position shows the date and time, while its area represents the
-        number of lines edited. Drag across the chart to select commits.
+        Each circle is one commit. Bigger circles changed more lines. Drag over part of the chart
+        to see what types of code were in those commits.
       </p>
 
       <div id="chart" aria-label="Scatterplot of portfolio commits by date and time of day"></div>
