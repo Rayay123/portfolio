@@ -409,6 +409,148 @@ button:hover {
   margin-bottom: 0.35rem;
 }
 
+.meta-section {
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.meta-note {
+  max-width: 48rem;
+  color: var(--muted);
+}
+
+dl.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(8rem,1fr));
+  gap: 0.75rem;
+  margin: 0;
+}
+
+dl.stats dt,
+dl.stats dd {
+  margin: 0;
+}
+
+dl.stats dt {
+  grid-row: 1;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+dl.stats dd {
+  grid-row: 2;
+  font-size: 1.15rem;
+  font-weight: bold;
+}
+
+#chart {
+  margin: 1rem 0;
+  overflow: visible;
+}
+
+#chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+#chart text {
+  fill: var(--text);
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+#chart .domain,
+#chart .tick line {
+  stroke: var(--border);
+}
+
+#chart .gridlines .domain {
+  display: none;
+}
+
+#chart .gridlines line {
+  stroke: var(--border);
+  stroke-opacity: 0.45;
+}
+
+#chart circle {
+  fill: var(--blue);
+  fill-opacity: 0.7;
+  stroke: canvas;
+  stroke-width: 1;
+  transition: 150ms;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+#chart circle:hover,
+#chart circle:focus-visible {
+  fill-opacity: 1;
+  outline: none;
+  stroke: var(--text);
+  stroke-width: 2;
+  transform: scale(1.2);
+}
+
+#chart circle.selected {
+  fill: #d6534d;
+  fill-opacity: 1;
+}
+
+#chart .selection {
+  fill: var(--blue);
+  fill-opacity: 0.12;
+  stroke: var(--blue);
+  stroke-dasharray: 5 3;
+}
+
+dl.info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25rem 0.7rem;
+  margin: 0;
+}
+
+dl.info dt,
+dl.info dd {
+  margin: 0;
+}
+
+dl.info dt {
+  color: var(--muted);
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 10;
+  width: min(15rem,calc(100vw - 1rem));
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text);
+  background: canvas;
+  box-shadow: 0 0.3rem 1rem color-mix(in oklch,canvastext 18%,transparent);
+  font-size: 0.8rem;
+  pointer-events: none;
+  transition: opacity 150ms,visibility 150ms;
+}
+
+.tooltip[hidden] {
+  display: grid;
+  opacity: 0;
+  visibility: hidden;
+}
+
+#selection-count {
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+#language-breakdown {
+  padding-top: 0.75rem;
+}
+
 .project-card {
   display: grid;
   grid-template-rows: auto auto 1fr;
@@ -669,5 +811,14 @@ footer p {
 
   .resume-entry header > p {
     text-align: left;
+  }
+
+  dl.stats {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  dl.stats dt,
+  dl.stats dd {
+    grid-row: auto;
   }
 }

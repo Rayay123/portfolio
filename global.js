@@ -11,6 +11,7 @@ const BASE_PATH=(location.hostname==="localhost" || location.hostname==="127.0.0
 let pages=[
   {url:"",title:"Home"},
   {url:"projects/",title:"Projects"},
+  {url:"meta/",title:"Meta"},
   {url:"contact/",title:"Contact"},
   {url:"resume/",title:"Resume"},
   {url:"https://github.com/Rayay123",title:"GitHub"},

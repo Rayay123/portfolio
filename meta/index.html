@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A D3 analysis of the code and commits behind Raynard's portfolio.">
+  <title>Code Meta Analysis | Raynard Joseph Taneka</title>
+  <link rel="stylesheet" href="../basic.css?v=20261103">
+  <script type="module" src="../global.js"></script>
+  <script type="module" src="main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <a class="site-name" href="../">Raynard Joseph Taneka</a>
+  </header>
+
+  <main id="main-content" class="meta-page">
+    <header class="page-intro">
+      <p class="eyebrow">Lab 6</p>
+      <h1>Code Meta Analysis</h1>
+      <p>This page looks at when I worked on this portfolio and how much code each commit changed.</p>
+    </header>
+
+    <section class="meta-section" aria-labelledby="summary-heading">
+      <h2 id="summary-heading">Summary</h2>
+      <div id="stats">Loading code statistics...</div>
+    </section>
+
+    <section class="meta-section" aria-labelledby="commits-heading">
+      <h2 id="commits-heading">Commits by time of day</h2>
+      <p class="meta-note">
+        Each dot is a commit. Its position shows the date and time, while its area represents the
+        number of lines edited. Drag across the chart to select commits.
+      </p>
+
+      <div id="chart" aria-label="Scatterplot of portfolio commits by date and time of day"></div>
+      <p id="selection-count" aria-live="polite">No commits selected</p>
+      <dl id="language-breakdown" class="stats" aria-live="polite"></dl>
+    </section>
+  </main>
+
+  <dl id="commit-tooltip" class="info tooltip" hidden>
+    <dt>Commit</dt>
+    <dd><a href="" id="commit-link" target="_blank" rel="noreferrer"></a></dd>
+
+    <dt>Date</dt>
+    <dd id="commit-date"></dd>
+
+    <dt>Time</dt>
+    <dd id="commit-time"></dd>
+
+    <dt>Author</dt>
+    <dd id="commit-author"></dd>
+
+    <dt>Lines edited</dt>
+    <dd id="commit-lines"></dd>
+  </dl>
+</body>
+</html>
