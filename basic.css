@@ -479,6 +479,7 @@ dl.stats dd {
   fill-opacity: 0.75;
   stroke: canvas;
   stroke-width: 1;
+  cursor: pointer;
 }
 
 #chart circle:hover,

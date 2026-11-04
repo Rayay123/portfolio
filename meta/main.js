@@ -172,8 +172,9 @@ function renderScatterPlot(commits){
     .attr("cx",d=>xScale(d.datetime))
     .attr("cy",d=>yScale(d.hourFrac))
     .attr("r",d=>rScale(d.totalLines))
+    .attr("role","button")
     .attr("tabindex",0)
-    .attr("aria-label",d=>`${d.totalLines} lines edited on ${d.date} at ${d.time}`)
+    .attr("aria-label",d=>`${d.totalLines} lines edited on ${d.date} at ${d.time}. Click to select.`)
     .on("mouseenter",function(event,commit){
       d3.select(this).style("fill-opacity",1);
       renderTooltipContent(commit);
@@ -193,6 +194,26 @@ function renderScatterPlot(commits){
     })
     .on("blur",()=>updateTooltipVisibility(false));
 
+  let clickedCommitId=null;
+
+  dots
+    .selectAll("circle")
+    .on("click",function(event,commit){
+      event.stopPropagation();
+      let sameCommit=clickedCommitId===commit.id;
+
+      // clear the dragged box before showing one selected point
+      svg.call(brush.move,null);
+      clickedCommitId=sameCommit ? null : commit.id;
+      showSelection(sameCommit ? [] : [commit]);
+    })
+    .on("keydown",function(event){
+      if(event.key==="Enter" || event.key===" "){
+        event.preventDefault();
+        this.dispatchEvent(new MouseEvent("click",{bubbles:true}));
+      }
+    });
+
   let brushSelection=null;
 
   function isCommitSelected(selection,commit){
@@ -208,14 +229,13 @@ function renderScatterPlot(commits){
     return selection ? commits.filter(d=>isCommitSelected(selection,d)) : [];
   }
 
-  function renderSelectionCount(selection){
-    let count=getSelectedCommits(selection).length;
+  function renderSelectionCount(selected){
+    let count=selected.length;
     document.getElementById("selection-count").textContent=
       count ? `${count} commit${count===1 ? "" : "s"} selected` : "No commits selected";
   }
 
-  function renderLanguageBreakdown(selection){
-    let selected=getSelectedCommits(selection);
+  function renderLanguageBreakdown(selected){
     let container=document.getElementById("language-breakdown");
     container.innerHTML="";
 
@@ -230,14 +250,17 @@ function renderScatterPlot(commits){
     }
   }
 
+  function showSelection(selected){
+    let selectedIds=new Set(selected.map(d=>d.id));
+    dots.selectAll("circle").classed("selected",d=>selectedIds.has(d.id));
+    renderSelectionCount(selected);
+    renderLanguageBreakdown(selected);
+  }
+
   function brushed(event){
     brushSelection=event.selection;
-    dots
-      .selectAll("circle")
-      .classed("selected",d=>isCommitSelected(brushSelection,d));
-
-    renderSelectionCount(brushSelection);
-    renderLanguageBreakdown(brushSelection);
+    clickedCommitId=null;
+    showSelection(getSelectedCommits(brushSelection));
   }
 
   let brush=d3
