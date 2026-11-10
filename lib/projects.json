@@ -1,5 +1,12 @@
 [
   {
+    "title":"Bikewatching",
+    "year":2026,
+    "image":"images/bikewatching-preview.png",
+    "description":"An interactive map of Bluebike traffic with station tooltips, a time filter, and arrival and departure patterns.",
+    "url":"https://rayay123.github.io/bikewatching/"
+  },
+  {
     "title":"Persuasive and Deceptive Visualization",
     "year":2026,
     "image":"project2/figures/supporting_access_improved.png",
