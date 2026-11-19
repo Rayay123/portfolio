@@ -340,19 +340,37 @@ function updateFileDisplay(commits){
     .html(d=>`<span class="file-swatch"></span>${d[0]}`);
 }
 
-function buildStory(commits){
+let dayKey=d3.timeFormat("%Y-%m-%d");
+
+function groupWorkdays(commits){
+  return d3.groups(commits,d=>dayKey(d.datetime)).map(([key,dayCommits])=>{
+    let lastCommit=dayCommits.at(-1);
+    let lines=dayCommits.flatMap(d=>d.lines);
+
+    return {
+      key,
+      id:lastCommit.id,
+      datetime:lastCommit.datetime,
+      url:lastCommit.url,
+      commitCount:dayCommits.length,
+      lineCount:lines.length,
+      fileCount:d3.group(lines,d=>d.file).size,
+    };
+  });
+}
+
+function buildStory(workdays){
   d3.select("#scatter-story")
     .selectAll(".step")
-    .data(commits,d=>d.id)
+    .data(workdays,d=>d.id)
     .join("div")
     .attr("class","step")
     .attr("data-commit",d=>d.id)
     .html((d,i)=>{
-      let fileCount=d3.group(d.lines,line=>line.file).size;
-      let date=d.datetime.toLocaleString("en",{dateStyle:"long",timeStyle:"short"});
-      let intro=i===0 ? "This was my first portfolio commit." : "I made another update to the portfolio.";
+      let date=d.datetime.toLocaleDateString("en",{dateStyle:"long"});
+      let intro=i===0 ? "This was my first day working on the portfolio." : "I worked on the portfolio again.";
 
-      return `<p><strong>${date}</strong><br>${intro} The <a href="${d.url}" target="_blank" rel="noreferrer">commit</a> changed ${d.totalLines} line${d.totalLines===1 ? "" : "s"} across ${fileCount} file${fileCount===1 ? "" : "s"}.</p>`;
+      return `<p><strong>${date}</strong><br>${intro} Across ${d.commitCount} commit${d.commitCount===1 ? "" : "s"}, I changed ${d.lineCount} line${d.lineCount===1 ? "" : "s"} in ${d.fileCount} file${d.fileCount===1 ? "" : "s"}. <a href="${d.url}" target="_blank" rel="noreferrer">View the last commit.</a></p>`;
     });
 }
 
@@ -363,6 +381,7 @@ function markStoryStep(commitId){
 
 let data=await loadData();
 let commits=processCommits(data);
+let workdays=groupWorkdays(commits);
 let filteredCommits=commits;
 let commitProgress=100;
 let timeScale=d3
@@ -372,7 +391,7 @@ let timeScale=d3
 let commitMaxTime=timeScale.invert(commitProgress);
 
 renderScatterPlot(commits);
-buildStory(commits);
+buildStory(workdays);
 
 function updatePage(){
   filteredCommits=commits.filter(d=>d.datetime<=commitMaxTime);
@@ -386,12 +405,18 @@ function updatePage(){
   renderCommitInfo(filteredCommits);
   updateScatterPlot(filteredCommits);
   updateFileDisplay(filteredCommits);
-  if(lastCommit) markStoryStep(lastCommit.id);
+  if(lastCommit){
+    let activeDay=workdays.find(d=>d.key===dayKey(lastCommit.datetime));
+    if(activeDay) markStoryStep(activeDay.id);
+  }
 }
 
 function onTimeSliderChange(){
   commitProgress=Number(document.getElementById("commit-progress").value);
-  commitMaxTime=timeScale.invert(commitProgress);
+  let nearestCommit=d3.least(commits,d=>Math.abs(timeScale(d.datetime)-commitProgress));
+  commitMaxTime=nearestCommit.datetime;
+  commitProgress=timeScale(commitMaxTime);
+  document.getElementById("commit-progress").value=commitProgress;
   updatePage();
 }
 

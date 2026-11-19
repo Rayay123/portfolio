@@ -467,8 +467,9 @@ button:hover {
 
 #scatter-story .step {
   display: flex;
-  min-height: 60vh;
+  min-height: 30vh;
   align-items: center;
+  margin-bottom: 0.75rem;
   padding: 1rem;
   border-left: 3px solid transparent;
   color: var(--muted);
