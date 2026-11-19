@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A page about the code and commits in my portfolio.">
-  <title>My Code Activity | Raynard Joseph Taneka</title>
-  <link rel="stylesheet" href="../basic.css?v=20261104">
+  <meta name="description" content="An interactive story about how my portfolio code changed over time.">
+  <title>How My Portfolio Grew | Raynard Joseph Taneka</title>
+  <link rel="stylesheet" href="../basic.css?v=20261119">
   <script type="module" src="../global.js"></script>
-  <script type="module" src="main.js?v=3"></script>
+  <script type="module" src="main.js?v=8"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -18,26 +18,47 @@
 
   <main id="main-content" class="meta-page">
     <header class="page-intro">
-      <p class="eyebrow">Lab 6</p>
-      <h1>My Code Activity</h1>
-      <p>I used D3 to look at the code and commits from this portfolio.</p>
+      <p class="eyebrow">Lab 8</p>
+      <h1>How My Portfolio Grew</h1>
+      <p>Scroll through the commits to see how this website changed over the quarter.</p>
     </header>
 
     <section class="meta-section" aria-labelledby="summary-heading">
       <h2 id="summary-heading">A few code stats</h2>
       <div id="stats">Loading code statistics...</div>
+
+      <div class="time-filter">
+        <label for="commit-progress">
+          <span>Show commits until</span>
+          <time id="commit-time"></time>
+        </label>
+        <input id="commit-progress" type="range" min="0" max="100" value="100">
+      </div>
     </section>
 
     <section class="meta-section" aria-labelledby="commits-heading">
       <h2 id="commits-heading">When I worked on my portfolio</h2>
       <p class="meta-note">
-        Each circle is one commit. Bigger circles changed more lines. Hover for details, click one
-        circle to select it, or drag over the chart to select a group.
+        Each circle is one commit, and bigger circles changed more lines. Scroll through the notes
+        to update the chart, or use the slider above.
       </p>
 
-      <div id="chart" aria-label="Scatterplot of portfolio commits by date and time of day"></div>
-      <p id="selection-count" aria-live="polite">No commits selected</p>
-      <dl id="language-breakdown" class="stats" aria-live="polite"></dl>
+      <div id="scrolly-1">
+        <div id="scatter-story" aria-label="Commit history"></div>
+
+        <div id="scatter-plot">
+          <div id="chart" aria-label="Scatterplot of portfolio commits by date and time of day"></div>
+          <p id="selection-count" aria-live="polite">No commits selected</p>
+          <dl id="language-breakdown" class="stats" aria-live="polite"></dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="meta-section" aria-labelledby="files-heading">
+      <h2 id="files-heading">Which files became the largest?</h2>
+      <p class="meta-note">Each colored dot represents one line of code. Files are sorted from the most lines to the fewest.</p>
+      <ul id="file-key" class="file-key" aria-label="File type colors"></ul>
+      <dl id="files" class="file-viz" aria-live="polite"></dl>
     </section>
   </main>
 
@@ -49,7 +70,7 @@
     <dd id="commit-date"></dd>
 
     <dt>Time</dt>
-    <dd id="commit-time"></dd>
+    <dd id="tooltip-time"></dd>
 
     <dt>Author</dt>
     <dd id="commit-author"></dd>
